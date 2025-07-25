@@ -4,13 +4,22 @@ public:
        
        
       
-        int i=0;
-       while(nums[i]>=0){
-        int temp=abs(nums[i]);
-        nums[i]=-nums[i];
-        i=temp;
-       }
-       return i;
+      int slow=0;
+      int fast=0;
+      slow=nums[slow];
+      fast=nums[nums[fast]];
+      while(slow!=fast){
+        slow=nums[slow];
+        fast=nums[nums[fast]];
+      }
+
+      slow=0;
+      while(slow!=fast){
+        slow=nums[slow];
+        fast=nums[fast];
+
+      }
+      return slow;
         
     }
 };
