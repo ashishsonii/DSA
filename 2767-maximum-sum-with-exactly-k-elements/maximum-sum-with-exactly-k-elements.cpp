@@ -6,12 +6,9 @@ public:
         for(auto x:nums){
             mx=max(x,mx);
         }
-        int sum =0;
-        while(k!=0){
-            sum+=mx;
-            mx++;
-            k--;
-        }
+      
+        int sum =(mx*k) +  (k*(k-1))/2;
+        
         return sum;
         
     }
