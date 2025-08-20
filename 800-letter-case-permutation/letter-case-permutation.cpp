@@ -1,56 +1,27 @@
 class Solution {
 public:
-
-    unordered_set<char> st;
     vector<string> ans;
 
-
-
-    void solve(string s,int i,string &temp){
-         if(temp.length()==s.length()){
-              ans.push_back(temp);
-              return;
-            }
-            if(i==s.length()){ans.push_back(temp);
-              return;}
-       
-        if(st.find(s[i])!=st.end()){
-            
-            temp+=toupper(s[i]); 
-            solve(s,i+1,temp);
-            temp.pop_back();
-           temp += tolower(s[i]); 
-            solve(s,i+1,temp);
-            temp.pop_back();
-           
-
+    void solve(string s, int i, string temp) {
+        if (i == s.length()) {
+            ans.push_back(temp);
+            return;
         }
-        else {temp.push_back(s[i]);
-        solve(s,i+1,temp);
-        temp.pop_back();
+
+        char ch = s[i];
+
+        if (isalpha(ch)) { // if it's a letter
+            // lowercase branch
+            solve(s, i + 1, temp + (char)tolower(ch));
+            // uppercase branch
+            solve(s, i + 1, temp + (char)toupper(ch));
+        } else { // if it's a digit or non-letter
+            solve(s, i + 1, temp + ch);
         }
-        return;
     }
-
 
     vector<string> letterCasePermutation(string s) {
-       
-
-   
-    for(char ch = 'A'; ch <= 'Z'; ch++) {
-        st.insert(ch);
-    }
-
-    
-    for(char ch = 'a'; ch <= 'z'; ch++) {
-        st.insert(ch);
-
-    }
-    int i=0;
-    string temp = "";
-
-    solve(s,i,temp);
-    return ans;
-        
+        solve(s, 0, "");
+        return ans;
     }
 };
