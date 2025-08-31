@@ -1,43 +1,28 @@
 class Solution {
 public:
+    vector<string> ans;
+    unordered_map<char, string> mp = {{'2', "abc"}, {'3', "def"}, {'4', "ghi"},
+                                      {'5', "jkl"}, {'6', "mno"}, {'7', "pqrs"},
+                                      {'8', "tuv"}, {'9', "wxyz"}};
 
- vector<string> ans;
- void solve(string digits,unordered_map<char,string> mp,int idx,string temp){
-    
-    if(idx>=digits.size()){
-        ans.push_back(temp);
-        return;
+    void doo(string digits, string temp, int idx) {
+        if (idx >= digits.size()) {
+            ans.push_back(temp);
+            return;
+        }
+        string s = mp[digits[idx]];
+        for (int i = 0; i < s.size(); i++) {
+            temp.push_back(s[i]);
+            doo(digits, temp, idx + 1);
+            temp.pop_back();
+        }
     }
-    string s=mp[digits[idx]];
-   
-    for(int i=0; i<s.size(); i++){
-        temp.push_back(s[i]);
-        solve(digits,mp,idx+1,temp);
-        temp.pop_back();
-       
-
-    }
- }
-
-
-
-
 
     vector<string> letterCombinations(string digits) {
-        unordered_map<char,string> mp;
-        mp['2']="abc";
-        mp['3']="def";
-        mp['4']="ghi";
-        mp['5']="jkl";
-        mp['6']="mno";
-        mp['7']="pqrs";
-        mp['8']="tuv";
-        mp['9']="wxyz";
-        string temp="";
-        if(digits.size()==0) return ans;
-        solve(digits,mp,0,temp);
+        if (digits.empty())
+            return {};
+
+        doo(digits, "", 0);
         return ans;
-        
-        
     }
 };
