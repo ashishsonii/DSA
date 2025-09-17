@@ -2,18 +2,11 @@ class FoodRatings {
 public:
 
 
-struct cmp {
-    bool operator()(const pair<int,string>& a, const pair<int,string>& b) const {
-        if (a.first == b.first) {
-            return a.second < b.second; // smaller name first if same rating
-        }
-        return a.first > b.first; // higher rating first
-    }
-};
+
 
 
         unordered_map<string,int > fodrat;
-        unordered_map<string,set<pair<int,string>,cmp>> cuisratfood;
+        unordered_map<string,set<pair<int,string>>> cuisratfood;
         unordered_map<string,string>foodcuis;
         
 
@@ -28,7 +21,7 @@ struct cmp {
         for(int i=0; i<foods.size(); i++){
             fodrat[foods[i]]=ratings[i];
             foodcuis[foods[i]]=cuisines[i];
-            cuisratfood[cuisines[i]].insert({ratings[i], foods[i]});
+            cuisratfood[cuisines[i]].insert({-ratings[i], foods[i]});
 
 
         }
@@ -39,8 +32,8 @@ struct cmp {
         int oldrat=fodrat[food];
         fodrat[food]=newRating;
         string curcuis=foodcuis[food];
-        cuisratfood[curcuis].erase({oldrat,food});
-        cuisratfood[curcuis].insert({newRating,food});
+        cuisratfood[curcuis].erase({-oldrat,food});
+        cuisratfood[curcuis].insert({-newRating,food});
         
 
         
