@@ -11,21 +11,25 @@
  */
 class Solution {
 public:
-    bool check(TreeNode* root, TreeNode* subroot){
-        if(root==NULL && subroot==NULL) return true;
-        if(!root || !subroot ) return false;
+
+    bool helper(TreeNode* root, TreeNode* sub){
+        if(!root && !sub)return true;
+        if (!root || !sub) return false;
+        if(root->val!=sub->val ) return false;
+      
+        return helper(root->left,sub->left) && helper(root->right,sub->right);
         
-        if(root->val!=subroot->val) return false;
-        return check(root->left,subroot->left) &&check(root->right,subroot->right);
     }
+    bool isSubtree(TreeNode* root, TreeNode* subRoot) {
+        
+        
+        if(!root) return false;
 
-    bool isSubtree(TreeNode* root, TreeNode* subroot) {
-        if(root==NULL) return false;
+        bool r= helper(root,subRoot);
+        if(r) return true;
 
-        if(check(root,subroot)) return true;
-        return  isSubtree(root->left,subroot) || isSubtree(root->right,subroot);
         
-        
-        
+       
+       return (isSubtree(root->left,subRoot)||isSubtree(root->right,subRoot));
     }
 };
