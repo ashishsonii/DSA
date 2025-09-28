@@ -21,9 +21,22 @@ public:
     }
     int findLongestChain(vector<vector<int>>& v) {
         memset(dp,-1,sizeof(dp));
-
+        int n=v.size();
         sort(v.begin(),v.end());
-        return helper(v,0,-1);
+        int mx=1;
+
+        vector<int>dpp(v.size(),1);
+        for(int i=0; i<n; i++){
+            int j=0;
+            while(j<i){
+                if(v[i][0]>v[j][1]){
+                    dpp[i]=max(dpp[i],1+dpp[j]);
+                }
+                j++;
+                mx=max(dpp[i],mx);
+            }
+        }
+        return mx;
         
     }
 };
