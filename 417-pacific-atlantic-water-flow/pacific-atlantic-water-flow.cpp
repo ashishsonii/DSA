@@ -1,44 +1,66 @@
 class Solution {
 public:
     int m, n;
-    vector<vector<int>> directions = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+    vector<vector<int>> dir = {{1,0}, {-1,0}, {0,1}, {0,-1}};
 
-    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
-        m = heights.size();
-        n = heights[0].size();
 
-        vector<vector<bool>> pacific(m, vector<bool>(n, false));
-        vector<vector<bool>> atlantic(m, vector<bool>(n, false));
+    
 
-        for (int j = 0; j < n; j++) dfs(0, j, heights, pacific);
-        for (int i = 0; i < m; i++) dfs(i, 0, heights, pacific);
 
-        for (int j = 0; j < n; j++) dfs(m-1, j, heights, atlantic);
-        for (int i = 0; i < m; i++) dfs(i, n-1, heights, atlantic);
 
-        vector<vector<int>> result;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (pacific[i][j] && atlantic[i][j]) {
-                    result.push_back({i, j});
-                }
+     
+
+
+
+
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& h) {
+        m = h.size();
+        n = h[0].size();
+        vector<vector<bool>> pac(m,vector<bool>(n,false));
+        vector<vector<bool>> atla(m,vector<bool>(n,false));
+        vector<vector<int>> res;
+
+        for(int i=0; i<m; i++){
+            dfs(h,i,0,INT_MIN,pac);
+            dfs(h,i,n-1,INT_MIN,atla);
+        }
+
+
+
+        for(int i=0; i<n; i++){
+            
+            dfs(h,0,i,INT_MIN,pac);
+            dfs(h,m-1,i,INT_MIN,atla);
+        }
+
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(pac[i][j] && atla[i][j]) res.push_back({i,j});
             }
         }
+        return res;
 
-        return result;
-    }
 
-    void dfs(int i, int j, vector<vector<int>>& heights, vector<vector<bool>>& visited) {
-        visited[i][j] = true;
+
+
         
-        for (auto& d : directions) {
-            int x = i + d[0], y = j + d[1];
-            
-            if (x < 0 || x >= m || y < 0 || y >= n) continue;
-            if (visited[x][y]) continue;
-            if (heights[x][y] < heights[i][j]) continue;
-            
-            dfs(x, y, heights, visited);
-        }
+
+        
     }
+
+    void dfs(vector<vector<int>>& h,int i,int j,int prev,vector<vector<bool>>& vis){
+        m = h.size();
+        n = h[0].size();
+
+        if(i>=m || i<0 || j<0|| j>=n || prev>h[i][j] || vis[i][j] ) return;
+        vis[i][j]=true;
+        for(auto &x: dir){
+            int i_=i+x[0];
+            int j_=j+x[1];
+            dfs(h,i_,j_,h[i][j],vis);
+        }
+        
+    }
+
+   
 };
