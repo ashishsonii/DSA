@@ -1,7 +1,22 @@
 class Solution {
 public:
     int m, n;
+
+    
     vector<vector<int>> dir = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+    void dfs(vector<vector<int>>& h,int i,int j,int prev,vector<vector<bool>>& vis){
+        m = h.size();
+        n = h[0].size();
+
+        if(i>=m || i<0 || j<0|| j>=n || prev>h[i][j] || vis[i][j] ) return;
+        vis[i][j]=true;
+        for(auto &x: dir){
+            int i_=i+x[0];
+            int j_=j+x[1];
+            dfs(h,i_,j_,h[i][j],vis);
+        }
+        
+    }
 
 
     
@@ -48,19 +63,7 @@ public:
         
     }
 
-    void dfs(vector<vector<int>>& h,int i,int j,int prev,vector<vector<bool>>& vis){
-        m = h.size();
-        n = h[0].size();
-
-        if(i>=m || i<0 || j<0|| j>=n || prev>h[i][j] || vis[i][j] ) return;
-        vis[i][j]=true;
-        for(auto &x: dir){
-            int i_=i+x[0];
-            int j_=j+x[1];
-            dfs(h,i_,j_,h[i][j],vis);
-        }
-        
-    }
+    
 
    
 };
