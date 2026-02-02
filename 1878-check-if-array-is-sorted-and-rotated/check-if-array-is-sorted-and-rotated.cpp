@@ -1,14 +1,27 @@
 class Solution {
 public:
     bool check(vector<int>& nums) {
-    int i=1;
-    int c=0;
-    while(i<nums.size()  ){
-        if(nums[i-1]>nums[i]) c++;
-        i++;
+        int n=nums.size();
+        int f=nums[0];
+        int i=1;
+        while(i<n && nums[i]>=nums[i-1]){
+            i++;
 
-    }
-    if(nums[0]<nums[nums.size()-1])c++;
-    return(c<=1);     
+        }
+        if(i==n ) return true;
+       
+        if(nums[i]>f) return false;
+
+        i++;
+        while(i<n && nums[i]<=f && nums[i-1]<=nums[i]){
+            i++;
+            
+
+        }
+        if(i==n ) return true;
+        return false;
+
+
+        
     }
 };
