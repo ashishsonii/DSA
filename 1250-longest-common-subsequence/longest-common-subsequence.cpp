@@ -10,6 +10,8 @@ public:
         if(i>=t1 || j>=t2) return 0;
         if(dp[i][j]!=-1) return dp[i][j];
         int x=0;
+
+
         if(text1[i]==text2[j]) x= 1+helper(text1,text2,i+1,j+1);
         else x=max(helper(text1,text2,i+1,j),helper(text1,text2,i,j+1));
         return dp[i][j]= x;
